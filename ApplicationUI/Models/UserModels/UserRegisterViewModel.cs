@@ -5,22 +5,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApplicationUI.Models
+namespace ApplicationUI.Models.UserModels
 {
-    public class UserViewModel
+    public class UserRegisterViewModel : BaseUserModel
     {
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string UserName { get; set; }
 
-        public string Password { get; set; }
-
+        [Required]
+        [Compare("Password",ErrorMessage ="Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        [FileExtensions(Extensions = "jpg,jpeg,png")]
         public IFormFile ProfileImage { get; set; }
 
+        
     }
 }

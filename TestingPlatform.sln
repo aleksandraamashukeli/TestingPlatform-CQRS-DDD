@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationUI", "ApplicationUI\ApplicationUI.csproj", "{85CDECE9-78F3-4C25-B001-EF6C60FC2672}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{32ED6F14-F279-4ECC-95AF-0AA43CC84975}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{85CDECE9-78F3-4C25-B001-EF6C60FC2672}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85CDECE9-78F3-4C25-B001-EF6C60FC2672}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85CDECE9-78F3-4C25-B001-EF6C60FC2672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32ED6F14-F279-4ECC-95AF-0AA43CC84975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32ED6F14-F279-4ECC-95AF-0AA43CC84975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32ED6F14-F279-4ECC-95AF-0AA43CC84975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32ED6F14-F279-4ECC-95AF-0AA43CC84975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

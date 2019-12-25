@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApplicationUI.Services;
+﻿using AutoMapper;
+using DataAccessLayer;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Services.Interfaces;
+using Services.Implementations;
 
 namespace ApplicationUI
 {
@@ -31,9 +34,25 @@ namespace ApplicationUI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDataAccessService( Configuration.GetConnectionString("DatabaseConn") );
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConn")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = new PathString("/Account/Login/"));
+
+            services.AddScoped<IRepository<User>, Repository<User>>();
+
+            services.AddScoped<IUserService, UserService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new DefaultMapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -52,12 +71,15 @@ namespace ApplicationUI
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseAuthentication();
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

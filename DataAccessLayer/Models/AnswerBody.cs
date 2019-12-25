@@ -4,10 +4,9 @@ using System.Text;
 
 namespace DataAccessLayer.Models
 {
-    public class AnswerBody
+    public class AnswerBody : Entity
     {
-        public int Id { get; set; }
-        public byte[] BackgroundImage { get; set; }
+        public string BackgroundImage { get; set; }
         public string AnswerText { get; set; }
 
         public int AnswerId { get; set; }

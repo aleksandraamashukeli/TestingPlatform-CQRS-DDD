@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace DataAccessLayer.Models
+﻿namespace Services.Models.UserModels
 {
-    public class User : Entity
+    public class UserDTO
     {
+        public int Id { get; set; }
+
         public string Email { get; set; }
 
         public string FirstName { get; set; }
@@ -15,8 +15,5 @@ namespace DataAccessLayer.Models
         public string Password { get; set; }
 
         public string ProfileImage { get; set; }
-
-        public List<Test> Tests { get; set; }
-
     }
 }

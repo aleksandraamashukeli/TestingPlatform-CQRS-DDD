@@ -16,10 +16,14 @@
 </head>
 <body>
 
+    <div>
+        <a asp-controller="Tests" asp-action="Home">goto tests</a>
+        <a asp-controller="Account" asp-action="Login">login</a>
+        <a asp-controller="Account" asp-action="Logout">logout</a>
+        <a asp-controller="Account" asp-action="Register">register</a>
+    </div>
 
         @RenderBody()
-
-
 
     <environment include="Development">
         <script src="~/js/site.js" asp-append-version="true"></script>
