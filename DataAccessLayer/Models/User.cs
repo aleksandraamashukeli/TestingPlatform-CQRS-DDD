@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Models
 {
-    public class User : Entity
+    public class User :IdentityUser
     {
-        public string Email { get; set; }
-
         public string FirstName { get; set; }
+
+        public string Score { get; set; }
 
         public string LastName { get; set; }
 
-        public string UserName { get; set; }
-
-        public string Password { get; set; }
-
         public string ProfileImage { get; set; }
 
-        public List<Test> Tests { get; set; }
-
+        public virtual List<Test> Tests { get; set; }
+        
     }
 }

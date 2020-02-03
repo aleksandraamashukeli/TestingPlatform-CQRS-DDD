@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Interfaces
+namespace Infrastructure
 {
-    public interface ITestService
-    {
 
-    }
 }

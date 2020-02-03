@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Models
+namespace Services.Models.AnswerModels
 {
-    public class AnswerBody : Entity
+    public class CreateAnswerBodyModel
     {
+        public int Id { get; set; }
         public string BackgroundImage { get; set; }
         public string AnswerText { get; set; }
-
         public int AnswerId { get; set; }
-        public Answer Answer { get; set; }
     }
 }

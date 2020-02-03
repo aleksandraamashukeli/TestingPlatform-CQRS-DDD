@@ -1,3 +1,10 @@
 ﻿
+<div id="home">
+    <p class="MainTitle"> <span>Q</span>uiz</p>
+    <p>testing platform<span class="animatedSubTitle">_</span></p>
+</div>
 
-<h1>Home Page</h1>
+@if (User.Identity.IsAuthenticated)
+{
+<partial name="~/Views/Test/_AddTest.cshtml" />
+}

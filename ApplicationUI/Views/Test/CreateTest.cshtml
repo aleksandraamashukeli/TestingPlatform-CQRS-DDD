@@ -1,0 +1,69 @@
+﻿@model CreateTestViewModel
+
+@section CreateTestStyle {
+    <link rel="stylesheet" type="text/css" href="~/css/createTest.css" />
+}
+@section CreateTestScript{
+    <script src="~/js/createTest.js"></script>
+}
+
+<div class="temp_container">
+    <p class="create_test_title">Create New Test!</p>
+
+    <div class="test_inputs">
+
+        <input type="text" placeholder=" Test Name" id="testName">
+
+        <input type="text" placeholder=" Test Description" id="testDescription">
+
+        <input type="file" id="testBackground"/>
+
+        <input type="button" onclick="CreateTest()" value="Create!" />
+
+    </div>
+
+    <div class="inner_container">
+        <div class="question_inputs">
+
+            <div class="question">
+                <div class="question_inner">
+                    <input type="text" placeholder="type question text" data-id="" class="questionTextInput" />
+                    <input type="file" id="questionBackground"  />
+                </div>
+
+                <div class="answers">
+                    <div class="answers_list">
+                        <div class="answer">
+                            <input type="radio" name="correctAnswer" />
+                            <input class="answerTextInput" placeholder="type answer text" />
+                        </div>
+
+                        <div class="answer">
+                            <input type="radio" name="correctAnswer" />
+                            <input class="answerTextInput" placeholder="type answer text" />
+                        </div>
+                        <div class="answer">
+                            <input type="radio" name="correctAnswer" />
+                            <input class="answerTextInput" placeholder="type answer text" />
+                        </div>
+
+                        <div class="answer">
+                            <input type="radio" name="correctAnswer" />
+                            <input class="answerTextInput" placeholder="type answer text" />
+                        </div>
+                    </div>
+                </div>
+
+               <div>
+                   <input class="addQuestion" type="button" value="add"/>
+               </div>
+            </div>
+                
+        </div>
+        <div class="list_of_questions">
+
+        </div>
+    </div>
+</div>
+
+

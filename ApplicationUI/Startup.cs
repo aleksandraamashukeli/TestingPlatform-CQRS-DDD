@@ -1,57 +1,61 @@
 ﻿using AutoMapper;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Services.Interfaces;
-using Services.Implementations;
+using Services.User.Commands;
 
 namespace ApplicationUI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
-
+        public IHostingEnvironment Environment { get;}
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-
+     
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConn")));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => options.LoginPath = new PathString("/Account/Login/"));
 
-            services.AddScoped<IRepository<User>, Repository<User>>();
-
-            services.AddScoped<IUserService, UserService>();
-
-            var mappingConfig = new MapperConfiguration(mc =>
+            services.ConfigureApplicationCookie(confing =>
             {
-                mc.AddProfile(new DefaultMapperProfile());
+                confing.Cookie.Name = "Identity.Cookies";
+                confing.LoginPath = "/Account/Login/";
             });
 
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
 
+            services.AddIdentity<User, IdentityRole>(config => 
+            {
+                config.Password.RequiredLength = 0;
+                config.Password.RequireDigit = false;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddDefaultTokenProviders();
+
+
+            services.AddMediatR(typeof(CreateUser).Assembly);
+          
+
+            services.AddScoped<IRepository<Test>, Repository<Test>>();
+            services.AddScoped<IRepository<Question>, Repository<Question>>();
+            services.AddScoped<IRepository<Answer>, Repository<Answer>>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddAutoMapper(typeof(Startup).Assembly, typeof(CreateUser).Assembly);
             services.AddMvc();
         }
         

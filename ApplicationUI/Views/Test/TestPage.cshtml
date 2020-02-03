@@ -1,0 +1,28 @@
+﻿@model DataAccessLayer.Models.Test
+
+
+
+    <div class="testpageContainer">
+        <p class="testname">@Model.TestName</p>
+
+        @foreach (var question in Model.Questions)
+        {
+            <div class="questionContainer">
+                <p >@question.QuestionText</p>
+                <div class="answersContainer">
+                    @foreach (var answer in question.Answers)
+                    {
+                        <div>
+                            @answer.AnswerText
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    
+        <a asp-action="SubmitTest" asp-controller="Test">
+            submit
+        </a>
+
+    </div>
+

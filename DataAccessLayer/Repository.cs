@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -22,7 +23,6 @@ namespace DataAccessLayer
             if (!entities.Contains(entity))
             {
                 entities.Add(entity);
-                 _dbcontext.SaveChanges();
             }
         }
 
@@ -31,19 +31,27 @@ namespace DataAccessLayer
             if (!entities.Contains(entity))
             {
                 entities.Update(entity);
-                _dbcontext.SaveChanges();
             }
         }
 
         public  void Delete(T entity)
         {
             entities.Remove(entity);
-            _dbcontext.SaveChanges();
+        }
+
+        public async Task SaveChanges()
+        {
+            await _dbcontext.SaveChangesAsync();
         }
 
         public IQueryable<T> GetAll()
         {
             return entities.AsQueryable();
+        }
+
+        public T getEntityById(int id)
+        {
+            return entities.Where(e => e.Id == id).FirstOrDefault();
         }
     }
 }

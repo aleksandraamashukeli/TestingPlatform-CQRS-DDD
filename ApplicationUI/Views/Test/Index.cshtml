@@ -1,0 +1,110 @@
+﻿
+
+<div class="test_container">
+
+</div>
+
+<partial name="~/Views/Test/_AddTest.cshtml" />
+
+
+
+<script>
+    var testContainer = document.querySelector(".test_container")
+
+
+
+    let TestsArray = []
+
+    async function getDataset() {
+        var response = await fetch('/Test/GetAllTests');
+        response.json()
+            .then(j => TestsArray = j)
+            .then(() => FillTests());
+
+        ;
+    }
+
+    getDataset();
+
+    var lastSize = 0;
+
+    var defaultTestTempalte = ` <div class="test_default">
+<div class="test_background" style="background-image: url(https://chordify.net/pages/wp-content/uploads/2019/08/random-chiasso-1024x683.png);"></div>
+<p class="test_name">First Test</p>
+<p class="test_description">this is description of first test</p>
+
+<a class="gotoTestButton" href="/Test/TestPage">
+    <i class="fas fa-angle-double-right" ></i>
+</a>
+
+<p class="test_addDate"><i class="far fa-calendar-alt"></i> 20/10/2019</p>
+</div>
+`
+    function GoToTest(e) {
+        
+    }
+
+    function FillTests() {
+
+        lastSize = testContainer.offsetWidth
+        if (testContainer.offsetWidth < 400) {
+            for (let i = 0; i < TestsArray; i++) {
+                GenerateDefaultTestElement();
+            }
+        }
+        else {
+            for (let i = 0; i < TestsArray.length; i++) {
+                GenerateTestElement(testContainer.offsetWidth, i);
+            }
+        }
+    }
+
+    function GenerateDefaultTestElement() {
+        testContainer.insertAdjacentHTML("beforeEnd", defaultTestTempalte)
+    }
+
+
+    function GenerateTestElement(size, index) {
+
+        var randomWidth = 150 - 0.5 + Math.random() * (size - 100 + 1);
+        lastSize -= randomWidth;
+
+
+        var testTemplate = ` <div class="test" style="width:${randomWidth}px;background:${getRandomColor()};)">
+    <div class="test_background bg${index}"></div>
+    <p class="test_name gent">${TestsArray[index].TestName}</p>
+    <p class="test_description gent">${TestsArray[index].TestDescription}</p>
+
+    <a href="/Test/TestPage/${TestsArray[index].Id}" class="gotoTestButton greyt"   >
+        <i class="fas fa-angle-double-right"></i>
+    </a>
+
+    <p class="test_addDate"><i class="far fa-calendar-alt" ></i> ${TestsArray[index].AddedOn}</p>
+    </div>
+    `
+
+
+
+        testContainer.insertAdjacentHTML("beforeEnd", testTemplate)
+
+    }
+
+
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
+    FillTests();
+
+
+
+</script>
+
+

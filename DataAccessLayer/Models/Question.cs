@@ -6,13 +6,13 @@ namespace DataAccessLayer.Models
 {
     public class Question :Entity
     {
-
-        public QuestionBody QuestionBody { get; set; }
-
-        public List<Answer> Answers { get; set; }
+        public int CorrectAnswerScore { get; set; }
+        public string BackgroundImage { get; set; }
+        public string QuestionText { get; set; }
+        public virtual List<Answer> Answers { get; set; }
 
         public int TestId { get; set; }
-        public Test Test { get; set; }
+        public virtual Test Test { get; set; }
 
     }
 }

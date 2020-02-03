@@ -1,6 +1,11 @@
-﻿using AutoMapper;
-using Services.Models.UserModels;
+﻿using ApplicationUI.Models.TestModels;
 using ApplicationUI.Models.UserModels;
+using AutoMapper;
+using DataAccessLayer.Models;
+using Services.Models.AnswerModels;
+using Services.Models.QuestionModels;
+using Services.Models.TestModels;
+using Services.Models.UserModels;
 
 namespace ApplicationUI
 {
@@ -8,10 +13,12 @@ namespace ApplicationUI
     {
         public DefaultMapperProfile()
         {
-            CreateMap<UserRegisterViewModel, UserDTO>();
-            CreateMap<UserLoginViewModel, UserDTO>();
-            CreateMap<BaseUserModel,UserDTO>();
-            CreateMap<UserDTO, UserProfileViewModel>();
+            CreateMap<UserLoginViewModel, SignInUserModel>();
+            CreateMap<UserRegisterViewModel, SignUpUserModel>();
+
+            CreateMap<CreateTestViewModel, CreateTestModel>();
+            CreateMap<CreateAnswerViewModel, CreateAnswerModel>();
+            CreateMap<CreateQuestionViewModel, CreateQuestionModel>();
         }
     }
 }

@@ -1,67 +1,46 @@
 ﻿using ApplicationUI.Models.UserModels;
 using AutoMapper;
-using Infrastructure;
-using Microsoft.AspNetCore.Authentication;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.Interfaces;
 using Services.Models.UserModels;
-using System.Collections.Generic;
-using System.Security.Claims;
+using Services.User.Commands;
+using Services.User.Queries;
 using System.Threading.Tasks;
 
 namespace ApplicationUI.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController :Controller
     {
-        private IUserService _userService { get; set; }
-        private IMapper _mapper { get; set; }
-        private static UserProfileViewModel UserProfile { get; set; }
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public AccountController(IUserService userService, IMapper mapper)
+        public AccountController(IMapper mapper, IMediator mediator)
         {
-            _userService = userService;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Register() => View();
+        public IActionResult Login() => View();
 
-        public IActionResult Register()
-        {
-            return View();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginViewModel user)
-        {
-            var readUserModel = _mapper.Map<UserDTO>(user);
-            UserProfile =_mapper.Map<UserProfileViewModel>(_userService.GetUser(readUserModel));
-
-            if (_userService.CanAuthenticate(readUserModel))
-            {
-                await Authorize(user);
-                return RedirectToAction("Profile");
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Register(UserRegisterViewModel user)
+        public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var createUserModel = _mapper.Map<UserDTO>(user);
-                createUserModel.ProfileImage = ImageConverter.ImageToBase64(user.ProfileImage);
-
-                _userService.RegisterUser(createUserModel);
-
-                return RedirectToAction("Login");
+                var userDTO = _mapper.Map<SignUpUserModel>(viewModel);
+                var result = await _mediator.Send(new CreateUser(userDTO));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Profile");
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
@@ -69,28 +48,47 @@ namespace ApplicationUI.Controllers
             }
         }
 
-        public async Task<IActionResult> Logout()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserLoginViewModel viewModel, string returnUrl)
         {
-            await HttpContext.SignOutAsync("Cookies");
-            return RedirectToAction("Index", "Home");
-        }
+            if (ModelState.IsValid)
+            {
+                var user = _mapper.Map<SignInUserModel>(viewModel);
+                var result = await _mediator.Send(new SignInUser(user));
 
+
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                        return Redirect(returnUrl);
+                    else
+                        return RedirectToAction("Index","Test");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+
+            
+        }
+           
         [Authorize]
         public IActionResult Profile()
         {
-            return View(UserProfile);
+            return View();
         }
 
-        private async Task Authorize(UserLoginViewModel user)
+        public async Task<IActionResult> Logout()
         {
-            var claims = new List<Claim> { new Claim(ClaimTypes.Email, user.Email) };
-            var userIdentity = new ClaimsIdentity(claims, "login");
-            var principal = new ClaimsPrincipal(userIdentity);
-
-            var props = new AuthenticationProperties();
-            props.IsPersistent = user.RememberMe;
-
-            await HttpContext.SignInAsync(principal,props);
+            await _mediator.Send(new SignOutUser());
+            return RedirectToAction("Index", "Home");
         }
+
     }
 }

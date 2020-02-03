@@ -2,14 +2,11 @@
 {
     public class Answer : Entity
     {
-        public AnswerBody AnswerBody { get; set; }
-
-        public string Body { get; set; }
-
+        public string BackgroundImage { get; set; }
+        public string AnswerText { get; set; }
         public bool IsCorrect { get; set; }
 
         public int QuestionId { get; set; }
-
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

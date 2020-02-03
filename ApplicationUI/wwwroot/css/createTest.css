@@ -1,0 +1,251 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+:root {
+
+    --font-montserat: 'Montserrat', sans-serif;
+    --transition-default: all 0.3s ease;
+    --transition-test: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --font-roboto: 'Roboto', sans-serif;
+}
+
+.temp_container {
+    margin: 0 auto;
+    height: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.create_test_title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 34px;
+}
+
+.test_inputs {
+    width: 100%;
+    height: 12%;
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 2px 14px rgba(3, 3, 3, 0.171);
+    border-radius: 6px;
+    background: #f5f5f5;
+}
+
+    .test_inputs input {
+        border: 1px solid rgb(179, 179, 179);
+        width: 130px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        height: 27px;
+        border-radius: 4px;
+        margin-left: 14px;
+    }
+
+input[type=file]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+input[type=file] {
+    cursor: pointer;
+    width: 110px;
+    height: 34px;
+    color: transparent;
+    border: none;
+    background: rgb(188,138,230);
+    background: linear-gradient(223deg, rgba(188,138,230,1) 0%, rgba(188,138,230,1) 24%, rgba(158,103,255,1) 91%);
+    font-family: var(--font-montserat);
+    border-radius: 23px;
+    transition: var(--transition-default);
+    box-shadow: 2px 2px 13px rgba(158,103,255,1)
+}
+
+    input[type=file]::before {
+        cursor: pointer;
+        width: 110px;
+        
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height: 34px;
+        color: white;
+        border: none;
+        background: rgb(188,138,230);
+        background: linear-gradient(223deg, rgba(188,138,230,1) 0%, rgba(188,138,230,1) 24%, rgba(158,103,255,1) 91%);
+        font-family: var(--font-montserat);
+        border-radius: 23px;
+        content:"Upload Image";
+        transition: var(--transition-default);
+        box-shadow: 2px 2px 13px rgba(158,103,255,1)
+    }
+
+    input[type=file]:hover {
+        transform: scale(1.1);
+        background: linear-gradient(223deg, rgba(188,138,230,1) 0%, rgba(188,148,230,1) 28%, rgba(158,103,255,1) 91%);
+        box-shadow: 2px 2px 13px #bc8ae6
+    }
+
+.inner_container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 73%;
+}
+.addedQuestion{
+    cursor:pointer;
+    width:90%;
+    height:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:6px;
+    background:white;
+    font-family:var(--font-montserat);
+    margin:5px;
+    transition: var(--transition-default);
+}
+.addedQuestion:hover{
+    box-shadow:2px 2px 12px rgba(78, 78, 78, 0.13);
+}
+.question_inputs {
+    width: 60%;
+    height: 90%;
+    box-shadow: 2px 2px 14px rgba(3, 3, 3, 0.3);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.questionIndex{
+    width:20px;
+    height:20px;
+    display:flex;
+    margin:5px;
+    justify-content:center;
+    align-items:center;
+    font-family:var(--font-montserat);
+    color:white;
+    border-radius:50%;
+    background:rgb(188,138,230)
+}
+.question {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 70%;
+    background: white;
+    border-radius: 6px;
+}
+.question_inner{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.questionTextInput {
+    font-family: var(--font-montserat);
+    width: 70%;
+    font-size: 23px;
+    margin: 8px;
+    height: 30px;
+    border: 1px solid rgb(179, 179, 179);
+    border-radius:6px;
+    padding:5px;
+}
+.answers{
+    width:90%;  
+    height:75%;
+    background:rgba(158, 103, 255, 0.56);
+    border-radius:6px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+.answer{
+
+    margin-left:5px;
+    margin-bottom:4px;
+    width:70%;
+    height:30px;
+    min-width:210px;
+    border-radius:30px 10px 10px 30px; 
+    background:white;
+    display:flex;
+    align-items:center;
+}
+.answerTextInput {
+    border-radius: 5px;
+    border: 1px solid #808080;
+    height: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 5px;
+}
+input[type=radio] {
+    margin: 5px;
+    position: relative;
+    border-radius: 15px;
+    cursor: pointer;
+    -webkit-appearance: button;
+    border: double 2px rgba(158,103,255,1);
+    background-color: white;
+    color: #FFF;
+    white-space: nowrap;
+    width: 15px;
+    transition: var(--transition-default);
+    height: 15px;
+}
+    input[type=radio]::after {
+        position: absolute;
+        left: 0px;
+        top: -20px;
+        content: "check correct answer";
+        background: rgba(158,103,255,1);
+        box-shadow:2px 2px 13px grey;
+        font-family: 21px;
+        padding: 4px;
+        border-radius: 3px;
+        transition: var(--transition-default);
+        opacity: 0;
+        transform-origin: left bottom;
+    }
+
+    input[type=radio]:checked {
+        background-color: rgba(158,103,255,1);
+    }
+
+    input[type=radio]:hover {
+        box-shadow: 1px 1px 12px rgb(188,138,230);
+    }
+        input[type=radio]:hover::after {
+            opacity:1;
+     } 
+
+        .answers_list {
+            width: 80%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            height: 85%;
+        }
+.fa-plus{
+    color:white;
+}
+.list_of_questions {
+    width: 30%;
+    height: 90%;
+    box-shadow: 2px 2px 14px rgba(3, 3, 3, 0.171);
+    border-radius: 6px;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

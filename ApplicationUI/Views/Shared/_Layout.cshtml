@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <title>@ViewData["Title"] - ApplicationUI</title>
 
     <environment include="Development">
@@ -16,14 +19,48 @@
 </head>
 <body>
 
-    <div>
-        <a asp-controller="Tests" asp-action="Home">goto tests</a>
-        <a asp-controller="Account" asp-action="Login">login</a>
-        <a asp-controller="Account" asp-action="Logout">logout</a>
-        <a asp-controller="Account" asp-action="Register">register</a>
+
+    <div class="nav_outer">
+        <nav>
+            <div class="nav_inner nav_wrap1">
+                <div class="logo">Q</div>
+            </div>
+
+            <div class="nav_inner nav_wrap2">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Test" asp-action="Index">Tests</a>
+            </div>
+
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="nav_inner nav_wrap3">
+                    <a asp-controller="Account" asp-action="Login">Log In</a>
+
+                    <div class="outlined">
+                        <a asp-controller="Account" asp-action="Register">Sign Up</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a asp-action="Profile" asp-controller="Account">
+                    <i class="fas fa-user-alt"></i>
+                </a>
+
+            }
+
+
+
+
+
+        </nav>
+
     </div>
 
+    <div class="container">
         @RenderBody()
+    </div>
+
 
     <environment include="Development">
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -34,5 +71,7 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    @RenderSection("CreateTestScript", required: false)
+    @RenderSection("CreateTestStyle", required: false)
 </body>
 </html>
