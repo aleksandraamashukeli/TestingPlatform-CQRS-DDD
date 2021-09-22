@@ -48,6 +48,24 @@ namespace ApplicationUI.Controllers
             return RedirectToAction("Index","Test");
         }
 
+        [HttpPost]
+        public async Task<int> SubmitTest([FromBody] SubmitTestViewModel submitTest)
+        {
+            var score = 0;
+            var test = await _mediator.Send(new GetTestById(submitTest.TestId));
+            foreach (var question in submitTest.FinishedQuestions)
+            {
+                var currentQuestion = test.Questions.Single(q => q.Id == question.QuestionId);
+
+                var correctAnswer = currentQuestion.Answers.Find(a => a.IsCorrect == true);
+                if (question.AnswerId == correctAnswer.Id)
+                {
+                    score++;
+                }
+
+            }
+            return score;
+        }
 
 
         public async Task<IActionResult> TestPage(int id)

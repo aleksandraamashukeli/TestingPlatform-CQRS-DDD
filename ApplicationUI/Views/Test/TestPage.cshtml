@@ -2,27 +2,26 @@
 
 
 
-    <div class="testpageContainer">
-        <p class="testname">@Model.TestName</p>
+<div data-id="@Model.Id" class="testpageContainer">
+    <p class="testname">@Model.TestName</p>
 
-        @foreach (var question in Model.Questions)
-        {
-            <div class="questionContainer">
-                <p >@question.QuestionText</p>
-                <div class="answersContainer">
-                    @foreach (var answer in question.Answers)
-                    {
-                        <div>
-                            @answer.AnswerText
-                        </div>
-                    }
-                </div>
+    @foreach (var question in Model.Questions)
+    {
+        <div data-id="@question.Id" class="questionContainer">
+            <p>@question.QuestionText</p>
+            <div class="answersContainer">
+                @foreach (var answer in question.Answers)
+                {
+                    <div class="answer" data-id="@answer.Id" onclick="selectAnswer()">
+                        @answer.AnswerText
+                    </div>
+                }
             </div>
-        }
-    
-        <a asp-action="SubmitTest" asp-controller="Test">
-            submit
-        </a>
+        </div>
+    }
 
-    </div>
+    <button onclick="submit()">
+        submit
+    </button>
 
+</div>
